@@ -1,0 +1,32 @@
+Serverless Framework
+
+Link:
+https://www.serverless.com/
+
+
+Prereq:
+
+1. Install Node JS
+2. Install Serverless Framework (npm install -g serverless)
+3. Create a user with Access Key and Secret Key. (admin access)
+
+
+Procedure: (serverless/sls)
+-------------
+
+1. serverless config credentials --provider aws --key <access_key> --secret <secret_key>
+2. Execute serverless command
+      == Select the language to be used in Lambda
+	  == Create a project
+	  == Login to Serverless Dashboard -- No
+	  == Deploy the function -- Yes
+	  
+3. serverless invoke --function <function_name> #default hello   (Note: Change to the dir of the created project)
+4. Update files or code and deploy the latest code 
+   serverless deploy --function <name>
+5. 
+   
+
+
+
+
