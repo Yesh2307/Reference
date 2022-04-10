@@ -25,8 +25,15 @@ Procedure: (serverless/sls)
 4. Update files or code and deploy the latest code 
    serverless deploy --function <name>
 5. 
+
+https://www.serverless.com//examples
    
 
 
+Frontend:
 
+Next JS : 
+https://nextjs.org/learn/basics/create-nextjs-app/setup
+
+npx create-next-app my-mail --use-npm --example "https://github.com/vercel/next-learn/tree/master/basics/learn-starter"
 
