@@ -1,0 +1,37 @@
+Baseline Infra
+
+
+Task 1: 
+======================
+
+Navigation -> Cloud Storage -> Create Bucket Name
+
+Name of the bucket and select the zone 
+
+
+Task 2:
+====================
+
+Navigation -> Pub Sub -> Create Topic 
+
+
+Task 3:
+==================
+
+Navigation -> Cloud Functions 
+
+Name: Given name
+
+Select: Cloud Storage
+Event type: Finalize/Create 
+
+Modify the files 
+
+
+Task 4: 
+=================
+
+Login to IAM from User1 
+From Principle delete the username 2
+
+
