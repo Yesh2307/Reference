@@ -1,0 +1,94 @@
+Challenge #1: 
+---------------------
+
+Navigation Menu: VM -> Create VM 
+
+Select Machine Type as F1
+
+Select OS as Debian 10 
+
+
+
+
+Challenge #2:
+=================== 
+
+gcloud container clusters create mycluster --zone <>
+
+gcloud container clusters get-credentials mycluster --zone <>
+
+kubectl create deployment hello-app --image gcr.io/google-samples/hello-app:2.0 
+
+kubectl expose deployment hello-app --type LoadBalancer --port 8080
+
+
+Challenge #3: HTTP Load Balancer 
+====================================
+
+cat << EOF > startup.sh
+#! /bin/bash
+apt-get update
+apt-get install -y nginx
+service nginx start
+sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
+EOF
+
+Step #1: Instance template
+
+gcloud compute instance-templates create nginx-temp \
+   --metadata-from-file startup-script=startup.sh
+
+Step #2: Create a network Pool
+
+gcloud compute target-pools create nginx-pool  (Specify Zone or default zone)
+
+
+Step 3: Create Managed instance using template
+
+gcloud compute instance-groups managed create nginx-group \
+   --template=nginx-temp --size=2 --target-pool nginx-pool 
+
+
+Step 4: Firewall rule 
+
+gcloud compute firewall-rules create grant-tcp-rule-739 --allow tcp:80
+
+
+Step 5: Create a http health checks 
+
+gcloud compute http-health-checks create http-basic-check 
+
+
+Step 6: Create backend service 
+
+gcloud compute backend-services create nginx-service \
+    --protocol=HTTP \
+    --http-health-checks=http-basic-check \
+    --global
+
+
+Step 7: Add instance groups to the backend service 
+
+gcloud compute backend-services add-backend nginx-service \
+    --instance-group=nginx-group \
+    --instance-group-zone=<Zone> \
+    --global
+
+##############################
+Step 8: Create URL map to map the request to the backend service 
+
+gcloud compute url-maps create web-map-http \
+    --default-service nginx-service
+
+Step 9: Now create a http proxy to route request to route
+
+gcloud compute target-http-proxies create http-lb-proxy \
+    --url-map web-map-http
+
+Step 10: Forward request to http proxy 
+gcloud compute forwarding-rules create http-content-rule \
+    --global \
+    --target-http-proxy=http-lb-proxy \
+    --ports=80
+
+
