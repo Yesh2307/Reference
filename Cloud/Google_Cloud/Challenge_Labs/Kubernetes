@@ -1,0 +1,92 @@
+
+
+Task 1: 
+======================
+
+1. source <(gsutil cat gs://cloud-training/gsp318/marking/setup_marking_v2.sh
+
+2. To get the clone line 
+   Source Code -> Clone (with credentials)
+   
+3. Clone the repo
+
+4. Copy the content of Dockerfile and run below command
+
+5. docker build -t <>:v0.0.1 .
+
+6. Run the script step1_v2.sh to test 
+
+
+Task 2: 
+====================
+
+1. docker run -p 8080:8080 <>:v0.0.1 &
+
+2. Run the script step2_v2.sh
+
+
+Task 3: 
+===========
+
+1. docker tag <image_name> <new_name>
+
+2. docker push <new_image_name>
+
+
+Task 4: 
+==========
+
+1. Modify the image name in deployment.yaml file
+
+2. kubectl apply -f deployment
+   kubectl apply -f service
+   
+   
+Task 5: 
+===========
+
+1. kubectl scale deployment <deploy_name> --replicas=3
+
+2. git merge origin/kurt-dev
+   docker build -t <image>:v0.0.2 .
+   
+   docker tag <old_name> <new_name>
+   
+   docker push <new_name>
+   
+3. kubectl edit deploy <deployment>
+   change image name to new name
+
+
+Task 6:
+============
+
+1. Take Password 
+   printf $(kubectl get secret cd-jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+   
+2. Kill pod running 8080 
+   docker stop <container>
+   docker rm <container>
+   
+   
+3. Run the command shared 
+
+4. Open webviwer and login to jenkins with admin and password given
+
+5. Manage Jenkins -> Manage Credentials -> Jenkins -> Add credentials -> Google metadata-> Service account select and save
+
+6. New Job -> Name -> Pipeline
+
+7. Poll ScM (* * * * * )
+
+8. Select ScM Github source code (to get link go to source code repo and clone (provide with credintails link)
+   execlude git clone 
+   
+9. Sleect *master
+
+10. Modify the respective files shared.
+
+11. git push origin master
+
+12 Job will be triggered and run 
+
