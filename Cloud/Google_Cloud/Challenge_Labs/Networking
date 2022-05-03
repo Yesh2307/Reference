@@ -1,0 +1,57 @@
+Challenge:
+
+Task:1 
+---------
+
+Go to friewall rules -> delete the rules
+
+
+Task:2
+---------
+
+Go to Virual Machines -> select bastion -> start VM
+
+Task: 3
+---------
+
+1. Include the given network tag in bastion host
+
+2. Create a firewall
+   Name: 
+   Network Tag: Given Tag
+   Network: acme-vpc
+ 
+Follow steps present in the link given
+https://cloud.google.com/iap/docs/using-tcp-forwarding
+
+
+Task :4
+-------------------
+1. Include Network Tag in Jucie-shop VM
+
+2. Create Firewall
+    Name:
+	Network: 
+	Network Tag (Target): given
+	Port : 80 TCP 
+    IP Range: 0.0.0.0/0
+	
+	
+Task 5:
+----------
+1. Edit Jucie Shop and give the netowkr tag
+
+2. Create Firewall 
+   Name: 
+   Network: 
+   Target Tag: Given
+   Soruce : give acme-mgmt range
+   Port : TCP 22
+   
+Task 6: 
+----------
+1. Connect to bastian ssh
+
+2. Perform ssh <internal_IP> 
+	
+
