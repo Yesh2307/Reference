@@ -1,0 +1,95 @@
+Task 1: (dev)
+-------------------
+
+VPC-> VPC networks
+
+Name:
+Target Tags:
+IP Address 
+
+Task 2: (prod)
+--------------------
+
+VPC-> VPC networks
+
+Name:
+Target Tags:
+IP Addres
+
+Task 3:
+------------------
+
+Create a VM and add the network subnets of dev and prod
+You wont be having access as firewall is not created 
+
+VPC-Network -> Firewall (create two firewalls for dev and prod)
+
+Task 4:
+----------
+
+Create mySQL instance 
+
+Cloud SQL -> mySQL -> create 
+
+gcloud sql connect <instance_name> --user=root
+
+Run the Query 
+
+User is not present
+Create user with below command
+
+CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'sqlserver';
+
+
+Task 5:
+---------------
+
+GKE -> Create cluster 
+Update the name
+zone 
+network subnets 
+in default pool change the nodes to 2.
+
+Task 6:
+--------------------
+
+gcloud container clusters get-credentials <>  #get the credentials 
+
+Download the files from cloud storage 
+
+gsutil cp -r <> .
+
+Update the wp-user.yaml file with the db username and password
+
+Deploy the yaml 
+kubectl apply -f <>
+
+Create the service account key in the cluster
+
+Task 7: 
+-------------------
+Deploy the deployment file by updating the SQL instance name created by GCP in Step 4
+
+Deploy service file 
+
+Wait till the external IP is displayed and then connect to the ip
+
+Task 8:
+------------
+Go to Monitoring
+
+Select uptime 
+Create uptime 
+
+Name:
+URL:
+Specify the hostname (loadbalancer IP)
+path: /
+
+Task 9:
+-----------
+IAM-Admin 
+
+Select the user and change the role to editor
+
+
