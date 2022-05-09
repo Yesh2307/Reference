@@ -1,0 +1,74 @@
+DevopS Challenge:
+--------------------
+
+1. VM (kraken-jumphost) already launched in the project 
+   Connect using ssh 
+
+2. Switch to root user (sudo su - )
+
+3. Set the zone 
+   gcloud config set compute/zone us-east1-b
+
+4. gcloud container clusters get-credentials <cluster-name>
+
+5. Go to GKE Clusters -> Services and Ingress 
+   Go to Jenkins-cd service -> Port Forwarding (Execute the action in cloud shell)
+
+6. Open the Preview (8080) and login to Jenkins server (admin) and password.
+
+7. Secret Admin Password:
+   printf $(kubectl get secret cd-jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+
+Clone The repo 
+
+1. Go to Cloud source repos  (sample-app)
+
+2. Clone the repo in the Kraken-jumphost (if not clone) -> /work/sample-app (will have the files)
+
+3. Create namespace production.
+
+4. Open the Jenkins, Create a multibranch pipeline 
+    Source : Give the path https 
+    In Credintials, Add Credintials (Gcloud Metadata)
+    Schedule Time : 1 min
+
+5. Automatically Pipeline will be run and set the status to success.
+
+Lab #2: 
+------------
+
+1. Create a development namespace.
+
+2. Create a branch names development and modify the respective files.
+
+3. Push the changes to the remote branch 
+
+4. From Jenkins UI Trigger the rescan of the branches 
+
+5. Automatically the Pipeline will be triggered and it should be success.
+
+Lab #3: 
+---------
+1. Create a new branch named canary.
+
+2. Merge the changes of the development to the canary branch 
+   git merge canary
+
+3. Push the changes to the repo
+
+4. Pipeline will be triggered and successfully.
+
+Lab #4:
+------------
+
+1. Chekout master branch
+
+2. Merge the canary branch changes to master
+
+3. push the changes to master remote repo
+
+4. Check the external IP URL it should reflect new changes 
+
+More Info:
+https://www.youtube.com/watch?v=pSSA6vlRgtA
+
