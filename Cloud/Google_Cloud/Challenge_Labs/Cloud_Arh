@@ -1,5 +1,26 @@
 
+Lab #1:
+----------
 
+1. Create a Storage Bucket 
+   Navigation -> Cloud Storage -> Browse -> Create bucket 
+   
+2. Copy the Startup script in the bucket
+
+3. Create Instance 
+   Navigation -> Compute Engine -> VM Instance -> Create Instance 
+   Instance Name: <>
+   Keep Default zone, region, machine-type, image 
+   Management Tab
+   Metadata -> Labels 
+   startup-script: <bucket_path>
+   Allow HTTP is true 
+   
+ 4. Check the access to the page using external ip 
+ 
+ 
+ Lab #2: 
+ ------------
 
 
 
@@ -53,4 +74,105 @@ Include selector
 
 kubectl apply -f deployment
 kubectl apply -f static pod
+
+
+Lab #4:
+-------------
+1. Perform the steps mentioned 
+
+2. Download the files from Cloud Storage of the project 
+
+   gsutil cp -r gs://[PROJECT_ID] .
+
+3. Extract the files from the archieve
+
+4. Perform Docker build 
+   docker build -t echo-app:v2 .
+
+5. Tag and uplod the image
+   docker tag echo-app:v2 gcr.io/<project_name>/echo-app:v2
+   docker push gcr.io/<project_name>/echo-app:v2
+
+6. First you need to scale out the application 
+  
+   kubeclt scale deployment <> --replicas=2
+
+7. kubectl edit deployment <> 
+   change the image name with the latest one that is uploaded in step 5  
+
+
+
+
+Lab #5: 
+----------------
+
+1. Create MYsql instance in Cloud SQL 
+
+   Navigation -> Cloud SQL -> MySQL 
+   Name: <instance_name>
+   Password 
+
+2. Connect to the blog IP 
+   Navigation -> VM Instances -> blog (external IP)
+   You are able to access the page
+
+3. Connect to the Cloud Shell
+
+   Export the external ip of the existing blog
+   export ADDRESS=<external IP of blog vm/32>
+
+4. Map the blog to connect to the cloud SQL instance 
+   gcloud sql instances patch <instance_name> --authorized-networks $ADDRESS --quiet
+
+5. Connect to the blog server 
+   gcloud compute ssh blog --zone=us-central1-a
+
+6. MYSQL IP 
+   MYSQLIP=$(gcloud sql instances describe <instance_name> --format="value(ipAddresses.ipAddress)")
+
+7. connect to the sql host (Get the cloud sql host instance ip)
+   mysql --host=[INSTANCE_IP_ADDR] \
+    --user=root --password
+
+8. Create a Database 
+  
+   CREATE DATABASE wordpress;
+CREATE USER 'blogadmin'@'%' IDENTIFIED BY 'Password1*';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'blogadmin'@'%';
+FLUSH PRIVILEGES;
+
+9. Take a backup of the sql dump in a file of the existing server 
+    sudo mysqldump -u root -pPassword1* wordpress > wordpress_backup.sql
+
+10. Import the backup in the CLoud SQL instance 
+    mysql --host=$MYSQLIP --user=root -pPassword1* --verbose wordpress < wordpress_backup.sql
+
+11. restart Apache Service 
+    sudo service apache2 restart
+
+12. You need to change the route or DB access from local to CLoud SQL instance
+    cd /var/www/html/wordpress
+   
+    sudo nano wp-config.php  (Change the hostname address from localhost -> cloud sql instance)
+
+13. Refresh the web page accessed in Step 2 (It should work) 
+
+
+Lab #6:
+--------------
+
+1. Create a instance and enable http 
+   Navigation -> Compute Engine -> Virtual Machine -> Create Instance 
+   Name: <>
+   default values : Zone mentioned
+   Allow HTTP
+
+2. Connect to the VM (SSH)
+   
+3. Install Apache server 
+
+   sudo apt update
+   sudo apt -y  install apache2
+
+4. Click on the external ip of the instance you can see the apache home page
 
